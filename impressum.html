@@ -1,30 +1,94 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Boom & Defend – Impressum</title>
+<meta name="description" content="Boom & Defend: privacy policy and legal notice.">
+<meta name="theme-color" content="#5fb6f2">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<meta property="og:title" content="Boom & Defend – Impressum">
+<meta property="og:description" content="Boom & Defend: privacy policy and legal notice.">
+<meta property="og:image" content="https://felixsecondary03.github.io/boom-and-defend-site/img/og.jpg">
+<meta property="og:type" content="website">
 <style>
-  body { margin: 0; background: #eaf6ff; color: #2b2e42; font: 16px/1.55 system-ui, -apple-system, Roboto, sans-serif; }
-  main { max-width: 680px; margin: 0 auto; padding: 32px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 4px; }
-  h2 { font-size: 22px; margin: 40px 0 8px; }
-  h4 { font-size: 18px; margin: 24px 0 4px; }
-  nav { margin: 0 0 24px; font-size: 15px; }
-  nav a { margin-right: 14px; }
-  .legal-updated { opacity: .7; font-size: 14px; margin-top: 28px; }
-  footer { margin-top: 40px; font-size: 14px; opacity: .75; }
+@font-face { font-family: 'Baloo 2'; src: url(fonts/baloo-2-latin-800-normal.woff2) format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Baloo 2'; src: url(fonts/baloo-2-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+:root { --ink: #2b2e42; --cream: #fff7e8; --orange: #ff7a3c; --blue: #4f8ff0; --gold: #ffd23f; --green: #3fb33b; }
+* { box-sizing: border-box; }
+html { background: #3d8fd6; }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink);
+  font: 600 17px/1.55 'Baloo 2', 'Trebuchet MS', system-ui, sans-serif;
+  background: radial-gradient(circle at 50% -10%, #d6f1ff, #8fd3ff 30%, #5fb6f2 60%, #3d8fd6) fixed;
+  overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed; left: 50%; top: -60vmax; width: 200vmax; height: 200vmax; transform: translateX(-50%);
+  background: repeating-conic-gradient(rgba(255,255,255,.12) 0 9deg, transparent 9deg 22deg); border-radius: 50%; pointer-events: none; z-index: -1;
+}
+a { color: #1f5fc4; font-weight: 800; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand img { width: 44px; height: 44px; border-radius: 12px; border: 3px solid var(--ink); box-shadow: 0 4px 0 var(--ink); }
+.brand b { font: 800 22px/1 'Baloo 2', sans-serif; }
+nav.links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+nav.links a { text-decoration: none; color: var(--ink); background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 2px 12px; box-shadow: 0 3px 0 var(--ink); font-size: 15px; }
+.sticker { font-weight: 800; color: #fff; -webkit-text-stroke: 0.16em var(--ink); paint-order: stroke fill; text-shadow: 0 0.09em 0 var(--ink); line-height: .9; margin: 0; }
+.logo { text-align: center; margin: 18px 0 6px; }
+.logo .l1 { display: block; font-size: clamp(64px, 17vw, 132px); color: var(--orange); transform: rotate(-4deg); }
+.logo .amp { display: block; font-size: clamp(30px, 8vw, 58px); color: var(--gold); margin: 4px 0; }
+.logo .l2 { display: block; font-size: clamp(56px, 15vw, 116px); color: var(--blue); transform: rotate(3deg); }
+.tagline { text-align: center; font-size: clamp(20px, 5vw, 28px); color: #fff; -webkit-text-stroke: 6px var(--ink); paint-order: stroke fill; font-weight: 800; margin: 14px auto 0; max-width: 640px; line-height: 1.25; }
+.ship { width: min(420px, 86vw); margin: 4px auto -6px; display: block; filter: drop-shadow(0 10px 0 rgba(43,46,66,.25)); animation: bob 3s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(1.5deg); } }
+@media (prefers-reduced-motion: reduce) { .ship { animation: none; } }
+.stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 22px 0 8px; }
+.store { display: inline-flex; flex-direction: column; align-items: center; min-width: 190px; padding: 10px 18px; border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 6px 0 var(--ink); text-decoration: none; color: #fff; font-weight: 800; font-size: 20px; line-height: 1.1; -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; background: linear-gradient(180deg, #7ee35a, #3fb33b); }
+.store small { font-size: 13px; -webkit-text-stroke: 0; color: rgba(255,255,255,.95); font-weight: 700; margin-top: 2px; }
+.store.soon { background: linear-gradient(180deg, #a9c8f5, #6f9be0); }
+.pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 14px 0 26px; }
+.pill { background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 2px 14px; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 var(--ink); }
+.shots { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 18px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+.shots img { flex: 0 0 auto; width: min(240px, 62vw); aspect-ratio: 9 / 16; border-radius: 22px; border: 4px solid var(--ink); box-shadow: 0 8px 0 var(--ink); scroll-snap-align: center; background: #2b2e42; }
+h2.sticker { font-size: clamp(34px, 8vw, 50px); text-align: center; margin: 34px 0 16px; color: var(--gold); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.card { background: var(--cream); border: 4px solid var(--ink); border-radius: 24px; box-shadow: 0 7px 0 var(--ink); padding: 16px 18px; }
+.card h3 { margin: 0 0 4px; font-size: 22px; line-height: 1.15; }
+.card p { margin: 0; font-size: 16px; }
+.weapons { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; margin-top: 10px; }
+.weapons span { display: grid; place-items: center; aspect-ratio: 1; background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 6px; }
+.weapons svg { width: 100%; height: 100%; }
+.baron { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
+.baron svg { width: 150px; height: 150px; }
+.quote { font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+@media (max-width: 520px) { .baron { grid-template-columns: 1fr; text-align: center; } .baron svg { margin: 0 auto; } }
+main.legal .card { padding: 22px 22px 26px; }
+main.legal h1 { font-size: 34px; margin: 0 0 4px; line-height: 1.1; }
+main.legal h2 { font-size: 28px; margin: 40px 0 8px; }
+main.legal h4 { font-size: 20px; margin: 24px 0 4px; }
+main.legal p, main.legal li { font-weight: 600; }
+.legal-updated { opacity: .7; font-size: 14px; margin-top: 28px; }
+footer.bottom { text-align: center; color: #fff; padding: 34px 0 40px; font-size: 15px; text-shadow: 0 1px 0 rgba(43,46,66,.6); }
+footer.bottom a { color: #fff; }
 </style>
 </head>
 <body>
-<main>
-<nav><a href="index.html">Boom &amp; Defend</a><a href="privacy-policy.html">Privacy / Datenschutz</a><a href="impressum.html">Impressum</a></nav>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="index.html"><img src="img/icon-192.png" alt=""><b>Boom &amp; Defend</b></a>
+  <nav class="links"><a href="privacy-policy.html">Privacy</a><a href="impressum.html">Impressum</a></nav>
+</header>
+<main class="legal"><div class="card">
 <h1>Impressum</h1>
 <p>Angaben gemäß § 5 DDG / Information according to § 5 DDG (German Digital Services Act):</p>
 <p>Felix Werner<br>c/o COCENTER, Koppoldstr. 1<br>86551 Aichach<br>Deutschland<br>E-Mail: <a href="mailto:splittingorbs@gmail.com">splittingorbs@gmail.com</a></p>
 <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV / Responsible for the content: Felix Werner, Anschrift wie oben.</p>
-
-<footer>Felix Werner · <a href="impressum.html">Impressum</a></footer>
-</main>
+<p class="legal-updated">18 November 2026</p>
+</div></main>
+<footer class="bottom">© 2026 Felix Werner · <a href="privacy-policy.html">Privacy policy / Datenschutz</a> · <a href="impressum.html">Impressum</a> · <a href="mailto:splittingorbs@gmail.com">splittingorbs@gmail.com</a></footer>
+</div>
 </body>
 </html>

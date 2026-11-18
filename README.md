@@ -1,13 +1,14 @@
 # Boom & Defend – website
 
-Public pages for the Android game **Boom & Defend** (`com.boomdefend.game`):
+Public pages for the game **Boom & Defend** (`com.boomdefend.game`, Android, iPhone and browser):
 
 - `index.html` – start page
 - `privacy-policy.html` – privacy policy (English + German)
 - `impressum.html` – Impressum
-- `store/` – Google Play listing graphics
+- `img/`, `fonts/` – web images and the Baloo 2 font (served from here: no outside requests)
+- `store/` – store listing graphics (Google Play; `store/ios/` App Store)
 
-The pages are generated from the game's source (`npm run legal` in the game repository);
-edit them there, not here.
+The pages are generated from the game's source (`python3 scripts/site-images.py` and
+`npm run legal` in the game repository, then copy `docs/` here); edit them there, not here.
 
 Live site: https://felixsecondary03.github.io/boom-and-defend-site/

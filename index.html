@@ -3,28 +3,222 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boom & Defend</title>
+<title>Boom & Defend – topple toy towers with 20 wild weapons</title>
+<meta name="description" content="A free physics game: topple toy towers on floating islands with 20 wild weapons. No ads, no data collected, plays offline.">
+<meta name="theme-color" content="#5fb6f2">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<meta property="og:title" content="Boom & Defend – topple toy towers with 20 wild weapons">
+<meta property="og:description" content="A free physics game: topple toy towers on floating islands with 20 wild weapons. No ads, no data collected, plays offline.">
+<meta property="og:image" content="https://felixsecondary03.github.io/boom-and-defend-site/img/og.jpg">
+<meta property="og:type" content="website">
 <style>
-  body { margin: 0; background: #eaf6ff; color: #2b2e42; font: 16px/1.55 system-ui, -apple-system, Roboto, sans-serif; }
-  main { max-width: 680px; margin: 0 auto; padding: 32px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 4px; }
-  h2 { font-size: 22px; margin: 40px 0 8px; }
-  h4 { font-size: 18px; margin: 24px 0 4px; }
-  nav { margin: 0 0 24px; font-size: 15px; }
-  nav a { margin-right: 14px; }
-  .legal-updated { opacity: .7; font-size: 14px; margin-top: 28px; }
-  footer { margin-top: 40px; font-size: 14px; opacity: .75; }
+@font-face { font-family: 'Baloo 2'; src: url(fonts/baloo-2-latin-800-normal.woff2) format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Baloo 2'; src: url(fonts/baloo-2-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+:root { --ink: #2b2e42; --cream: #fff7e8; --orange: #ff7a3c; --blue: #4f8ff0; --gold: #ffd23f; --green: #3fb33b; }
+* { box-sizing: border-box; }
+html { background: #3d8fd6; }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink);
+  font: 600 17px/1.55 'Baloo 2', 'Trebuchet MS', system-ui, sans-serif;
+  background: radial-gradient(circle at 50% -10%, #d6f1ff, #8fd3ff 30%, #5fb6f2 60%, #3d8fd6) fixed;
+  overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed; left: 50%; top: -60vmax; width: 200vmax; height: 200vmax; transform: translateX(-50%);
+  background: repeating-conic-gradient(rgba(255,255,255,.12) 0 9deg, transparent 9deg 22deg); border-radius: 50%; pointer-events: none; z-index: -1;
+}
+a { color: #1f5fc4; font-weight: 800; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand img { width: 44px; height: 44px; border-radius: 12px; border: 3px solid var(--ink); box-shadow: 0 4px 0 var(--ink); }
+.brand b { font: 800 22px/1 'Baloo 2', sans-serif; }
+nav.links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+nav.links a { text-decoration: none; color: var(--ink); background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 2px 12px; box-shadow: 0 3px 0 var(--ink); font-size: 15px; }
+.sticker { font-weight: 800; color: #fff; -webkit-text-stroke: 0.16em var(--ink); paint-order: stroke fill; text-shadow: 0 0.09em 0 var(--ink); line-height: .9; margin: 0; }
+.logo { text-align: center; margin: 18px 0 6px; }
+.logo .l1 { display: block; font-size: clamp(64px, 17vw, 132px); color: var(--orange); transform: rotate(-4deg); }
+.logo .amp { display: block; font-size: clamp(30px, 8vw, 58px); color: var(--gold); margin: 4px 0; }
+.logo .l2 { display: block; font-size: clamp(56px, 15vw, 116px); color: var(--blue); transform: rotate(3deg); }
+.tagline { text-align: center; font-size: clamp(20px, 5vw, 28px); color: #fff; -webkit-text-stroke: 6px var(--ink); paint-order: stroke fill; font-weight: 800; margin: 14px auto 0; max-width: 640px; line-height: 1.25; }
+.ship { width: min(420px, 86vw); margin: 4px auto -6px; display: block; filter: drop-shadow(0 10px 0 rgba(43,46,66,.25)); animation: bob 3s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(1.5deg); } }
+@media (prefers-reduced-motion: reduce) { .ship { animation: none; } }
+.stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 22px 0 8px; }
+.store { display: inline-flex; flex-direction: column; align-items: center; min-width: 190px; padding: 10px 18px; border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 6px 0 var(--ink); text-decoration: none; color: #fff; font-weight: 800; font-size: 20px; line-height: 1.1; -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; background: linear-gradient(180deg, #7ee35a, #3fb33b); }
+.store small { font-size: 13px; -webkit-text-stroke: 0; color: rgba(255,255,255,.95); font-weight: 700; margin-top: 2px; }
+.store.soon { background: linear-gradient(180deg, #a9c8f5, #6f9be0); }
+.pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 14px 0 26px; }
+.pill { background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 2px 14px; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 var(--ink); }
+.shots { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 18px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+.shots img { flex: 0 0 auto; width: min(240px, 62vw); aspect-ratio: 9 / 16; border-radius: 22px; border: 4px solid var(--ink); box-shadow: 0 8px 0 var(--ink); scroll-snap-align: center; background: #2b2e42; }
+h2.sticker { font-size: clamp(34px, 8vw, 50px); text-align: center; margin: 34px 0 16px; color: var(--gold); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.card { background: var(--cream); border: 4px solid var(--ink); border-radius: 24px; box-shadow: 0 7px 0 var(--ink); padding: 16px 18px; }
+.card h3 { margin: 0 0 4px; font-size: 22px; line-height: 1.15; }
+.card p { margin: 0; font-size: 16px; }
+.weapons { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; margin-top: 10px; }
+.weapons span { display: grid; place-items: center; aspect-ratio: 1; background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 6px; }
+.weapons svg { width: 100%; height: 100%; }
+.baron { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
+.baron svg { width: 150px; height: 150px; }
+.quote { font-size: 22px; font-weight: 800; margin: 0 0 4px; }
+@media (max-width: 520px) { .baron { grid-template-columns: 1fr; text-align: center; } .baron svg { margin: 0 auto; } }
+main.legal .card { padding: 22px 22px 26px; }
+main.legal h1 { font-size: 34px; margin: 0 0 4px; line-height: 1.1; }
+main.legal h2 { font-size: 28px; margin: 40px 0 8px; }
+main.legal h4 { font-size: 20px; margin: 24px 0 4px; }
+main.legal p, main.legal li { font-weight: 600; }
+.legal-updated { opacity: .7; font-size: 14px; margin-top: 28px; }
+footer.bottom { text-align: center; color: #fff; padding: 34px 0 40px; font-size: 15px; text-shadow: 0 1px 0 rgba(43,46,66,.6); }
+footer.bottom a { color: #fff; }
 </style>
 </head>
 <body>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="index.html"><img src="img/icon-192.png" alt=""><b>Boom &amp; Defend</b></a>
+  <nav class="links"><a href="privacy-policy.html">Privacy</a><a href="impressum.html">Impressum</a></nav>
+</header>
 <main>
-<nav><a href="index.html">Boom &amp; Defend</a><a href="privacy-policy.html">Privacy / Datenschutz</a><a href="impressum.html">Impressum</a></nav>
-<h1>Boom &amp; Defend</h1>
-<p>Topple toy towers on floating islands with 19 wild weapons. A free physics game for Android. No ads, no data collected, plays offline.</p>
-<p><a href="privacy-policy.html">Privacy Policy / Datenschutzerklärung</a><br><a href="impressum.html">Impressum</a></p>
-<p>Contact: <a href="mailto:splittingorbs@gmail.com">splittingorbs@gmail.com</a></p>
-<p class="legal-updated">16 November 2026</p>
-<footer>Felix Werner · <a href="impressum.html">Impressum</a></footer>
+  <h1 class="logo sticker"><span class="l1">BOOM</span><span class="amp">&amp;</span><span class="l2">DEFEND</span></h1>
+  <div class="ship" aria-hidden="true"><svg viewBox="0 0 260 214" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g class="ship-clouds" fill="#ffffff" stroke="#c9dcf2" stroke-width="2.5">
+    <ellipse cx="62" cy="192" rx="30" ry="12"/><ellipse cx="128" cy="198" rx="40" ry="13"/><ellipse cx="196" cy="190" rx="30" ry="12"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.75">
+    <path d="M4 70h24"/><path d="M10 92h18"/><path d="M2 140h22"/>
+  </g>
+  <g class="ship-oars"><path d="M78 128L58 178" stroke="#2b2e42" stroke-width="8" stroke-linecap="round"/><path d="M78 128L58 178" stroke="#b0703a" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="57" cy="181" rx="4.2" ry="8" transform="rotate(22 57 181)" fill="#b0703a" stroke="#2b2e42" stroke-width="2.4"/><path d="M102 128L82 178" stroke="#2b2e42" stroke-width="8" stroke-linecap="round"/><path d="M102 128L82 178" stroke="#b0703a" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="81" cy="181" rx="4.2" ry="8" transform="rotate(22 81 181)" fill="#b0703a" stroke="#2b2e42" stroke-width="2.4"/><path d="M126 128L106 178" stroke="#2b2e42" stroke-width="8" stroke-linecap="round"/><path d="M126 128L106 178" stroke="#b0703a" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="105" cy="181" rx="4.2" ry="8" transform="rotate(22 105 181)" fill="#b0703a" stroke="#2b2e42" stroke-width="2.4"/><path d="M150 128L130 178" stroke="#2b2e42" stroke-width="8" stroke-linecap="round"/><path d="M150 128L130 178" stroke="#b0703a" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="129" cy="181" rx="4.2" ry="8" transform="rotate(22 129 181)" fill="#b0703a" stroke="#2b2e42" stroke-width="2.4"/><path d="M174 128L154 178" stroke="#2b2e42" stroke-width="8" stroke-linecap="round"/><path d="M174 128L154 178" stroke="#b0703a" stroke-width="3.6" stroke-linecap="round"/><ellipse cx="153" cy="181" rx="4.2" ry="8" transform="rotate(22 153 181)" fill="#b0703a" stroke="#2b2e42" stroke-width="2.4"/></g>
+  <path d="M46 114C30 100 22 82 30 70C37 60 50 66 44 77" fill="none" stroke="#2b2e42" stroke-width="13" stroke-linecap="round"/>
+  <path d="M46 114C30 100 22 82 30 70C37 60 50 66 44 77" fill="none" stroke="#b0703a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M136 106V22" stroke="#2b2e42" stroke-width="10" stroke-linecap="round"/>
+  <path d="M136 106V22" stroke="#7a4520" stroke-width="5" stroke-linecap="round"/>
+  <path d="M136 14L160 21L136 28Z" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.6" stroke-linejoin="round"/>
+  <clipPath id="ship-sail-clip"><path d="M92 36Q136 28 180 36L174 94Q136 102 98 94Z"/></clipPath>
+  <path d="M92 36Q136 28 180 36L174 94Q136 102 98 94Z" fill="#fff3d6"/>
+  <g clip-path="url(#ship-sail-clip)" fill="#e0533d"><rect x="104" y="20" width="13" height="90"/><rect x="155" y="20" width="13" height="90"/></g>
+  <path d="M136 50l4.4 9 9.9 1.4-7.2 7 1.7 9.8-8.8-4.6-8.8 4.6 1.7-9.8-7.2-7 9.9-1.4z" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M92 36Q136 28 180 36L174 94Q136 102 98 94Z" fill="none" stroke="#2b2e42" stroke-width="3.4" stroke-linejoin="round"/>
+  <path d="M86 34Q136 25 186 34" fill="none" stroke="#2b2e42" stroke-width="9" stroke-linecap="round"/>
+  <path d="M86 34Q136 25 186 34" fill="none" stroke="#7a4520" stroke-width="4.4" stroke-linecap="round"/>
+  <path d="M204 138L242 146L204 154Z" fill="#e0a93e" stroke="#2b2e42" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M40 112L210 112C216 112 222 106 226 96L230 100C226 120 214 148 186 154L88 154C62 154 46 140 40 112Z" fill="#b0703a" stroke="#2b2e42" stroke-width="3.6" stroke-linejoin="round"/>
+  <path d="M50 128C100 133 160 133 220 122" fill="none" stroke="#7a4520" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M62 142C110 146 160 146 206 138" fill="none" stroke="#7a4520" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M44 106H214" stroke="#2b2e42" stroke-width="10" stroke-linecap="round"/>
+  <path d="M44 106H214" stroke="#7a4520" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="70" cy="111" r="9" fill="#e0533d" stroke="#2b2e42" stroke-width="2.6"/><circle cx="70" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/><circle cx="92" cy="111" r="9" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.6"/><circle cx="92" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/><circle cx="114" cy="111" r="9" fill="#e0533d" stroke="#2b2e42" stroke-width="2.6"/><circle cx="114" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/><circle cx="136" cy="111" r="9" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.6"/><circle cx="136" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/><circle cx="158" cy="111" r="9" fill="#e0533d" stroke="#2b2e42" stroke-width="2.6"/><circle cx="158" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/><circle cx="180" cy="111" r="9" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.6"/><circle cx="180" cy="111" r="2.6" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.2"/>
+  <path d="M206 98L236 88L239 96L210 106Z" fill="#3a3f57" stroke="#2b2e42" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="238" cy="92" r="3.4" fill="#e0a93e" stroke="#2b2e42" stroke-width="1.8"/>
+  <ellipse cx="202" cy="128" rx="8" ry="6" fill="#ffffff" stroke="#2b2e42" stroke-width="2.4"/>
+  <circle cx="204.5" cy="128" r="3" fill="#2b2e42"/>
+</svg></div>
+  <p class="tagline">Topple toy towers on floating islands with 20 wild weapons.</p>
+  <div class="stores">
+    <span class="store soon">Google Play<small>Coming soon</small></span>
+    <span class="store soon">App Store<small>Coming soon</small></span>
+    <span class="store soon">Play in browser<small>Coming soon on itch.io</small></span>
+  </div>
+  <div class="pills"><span class="pill">Free</span><span class="pill">No ads</span><span class="pill">No data collected</span><span class="pill">Plays offline</span></div>
+  <div class="shots"><img src="img/shot-1.webp" width="540" height="960" alt="Boom & Defend screenshot 1" loading="lazy"><img src="img/shot-2.webp" width="540" height="960" alt="Boom & Defend screenshot 2" loading="lazy"><img src="img/shot-3.webp" width="540" height="960" alt="Boom & Defend screenshot 3" loading="lazy"><img src="img/shot-4.webp" width="540" height="960" alt="Boom & Defend screenshot 4" loading="lazy"><img src="img/shot-5.webp" width="540" height="960" alt="Boom & Defend screenshot 5" loading="lazy"><img src="img/shot-6.webp" width="540" height="960" alt="Boom & Defend screenshot 6" loading="lazy"></div>
+
+  <h2 class="sticker">20 WILD WEAPONS</h2>
+  <div class="card">
+    <p>Rockets, cluster bombs, bomb arrows, buzzsaws, a wrecking ball on a chain, quake hammers, anti-grav fields, black holes, a nuke… Drag one onto the tower, aim, let go.</p>
+    <div class="weapons"><span title="rocket"><svg aria-hidden="true" viewBox="0 0 64 64"><g transform="rotate(45 32 32)">
+    <path d="M32 6c7 6 10 15 10 26v14H22V32c0-11 3-20 10-26z" fill="#f4f4f4" stroke="#2b2e42" stroke-width="3"/>
+    <path d="M32 6c4 3.5 6.6 8 8 13H24c1.4-5 4-9.5 8-13z" fill="#ef4b3f" stroke="#2b2e42" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="32" cy="28" r="4.5" fill="#6cc6ff" stroke="#2b2e42" stroke-width="2.5"/>
+    <path d="M22 36l-8 10v6l8-4zM42 36l8 10v6l-8-4z" fill="#ef4b3f" stroke="#2b2e42" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M26 47h12l-2 6c-1 3-7 3-8 0z" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.5"/></g></svg></span><span title="cluster"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <path d="M40 14c4-6 9-7 12-4" fill="none" stroke="#7a5a3a" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="53" cy="9" r="4" fill="#ffd23f"/>
+    <circle cx="30" cy="34" r="20" fill="#2f3346" stroke="#151724" stroke-width="3"/>
+    <rect x="34" y="12" width="9" height="8" rx="2" transform="rotate(35 38 16)" fill="#585d78" stroke="#151724" stroke-width="2.5"/>
+    <circle cx="22" cy="28" r="5" fill="#e8453c" stroke="#151724" stroke-width="2"/>
+    <circle cx="36" cy="28" r="5" fill="#e8453c" stroke="#151724" stroke-width="2"/>
+    <circle cx="22" cy="41" r="5" fill="#e8453c" stroke="#151724" stroke-width="2"/>
+    <circle cx="36" cy="41" r="5" fill="#e8453c" stroke="#151724" stroke-width="2"/></svg></span><span title="poison"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <rect x="26" y="6" width="12" height="7" rx="2" fill="#a8703f" stroke="#2b2e42" stroke-width="2.5"/>
+    <path d="M27 13h10v10c9 3 15 10 15 19 0 11-9 17-20 17S12 53 12 42c0-9 6-16 15-19z" fill="#d9fff0" stroke="#2b2e42" stroke-width="3"/>
+    <path d="M14.5 40c6-3 11 3 17.5 0s12-3 17.5 0C49 51 41 56 32 56s-17-5-17.5-16z" fill="#7dff4a" stroke="#2b2e42" stroke-width="2"/>
+    <circle cx="26" cy="47" r="3" fill="#d4ffb8"/><circle cx="37" cy="44" r="2" fill="#d4ffb8"/>
+    <circle cx="33" cy="33" r="2.5" fill="#7dff4a"/></svg></span><span title="shrink"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <rect x="26" y="6" width="12" height="7" rx="2" fill="#a8703f" stroke="#2b2e42" stroke-width="2.5"/>
+    <path d="M27 13h10v10c9 3 15 10 15 19 0 11-9 17-20 17S12 53 12 42c0-9 6-16 15-19z" fill="#f1e3ff" stroke="#2b2e42" stroke-width="3"/>
+    <path d="M14.5 40c6-3 11 3 17.5 0s12-3 17.5 0C49 51 41 56 32 56s-17-5-17.5-16z" fill="#b56bff" stroke="#2b2e42" stroke-width="2"/>
+    <circle cx="26" cy="47" r="3" fill="#ecd6ff"/><circle cx="37" cy="44" r="2" fill="#ecd6ff"/>
+    <circle cx="33" cy="33" r="2.5" fill="#b56bff"/>
+    <path d="M44 22l6-6M50 22h-6v-6" fill="none" stroke="#2b2e42" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span title="frost"><svg aria-hidden="true" viewBox="-4 -4 108 108"><g stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M33 30 L38 6 L45 30Z M44 30 L51 0 L58 30Z M56 30 L63 11 L67 30Z" fill="#e6fbff"/>
+    <rect x="29" y="28" width="42" height="13" rx="4" fill="#4f8ff0"/>
+    <rect x="25" y="40" width="50" height="52" rx="11" fill="#9fe6ff"/>
+    <rect x="25" y="55" width="50" height="10" fill="#e6f8ff" stroke-width="3.5"/>
+    <path d="M50 70 v16 M43 74 l14 8 M57 74 l-14 8" stroke="#2e7fc4" stroke-width="4" fill="none"/></g></svg></span><span title="saw"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <path d="M52.0 32.0 L57.9 39.7 L49.3 42.0 L50.6 51.6 L42.0 49.3 L38.3 58.3 L32.0 52.0 L24.3 57.9 L22.0 49.3 L12.4 50.6 L14.7 42.0 L5.7 38.3 L12.0 32.0 L6.1 24.3 L14.7 22.0 L13.4 12.4 L22.0 14.7 L25.7 5.7 L32.0 12.0 L39.7 6.1 L42.0 14.7 L51.6 13.4 L49.3 22.0 L58.3 25.7Z" fill="#e6ecf5" stroke="#2b2e42" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="32" cy="32" r="13" fill="#c3ccda" stroke="#2b2e42" stroke-width="2.5"/>
+    <path d="M24 26a10 10 0 0 1 9-5" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="6" fill="#ef4b3f" stroke="#2b2e42" stroke-width="2.5"/></svg></span><span title="wrecker"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <path d="M32 2v6" stroke="#2b2e42" stroke-width="3" stroke-linecap="round"/>
+    <rect x="28" y="7" width="8" height="9" rx="4" fill="none" stroke="#6b7290" stroke-width="3"/>
+    <rect x="30" y="14" width="4" height="9" rx="2" fill="#6b7290" stroke="#2b2e42" stroke-width="1.5"/>
+    <circle cx="32" cy="40" r="20" fill="#3a3f57" stroke="#151724" stroke-width="3"/>
+    <path d="M12.5 38h39" stroke="#6b7290" stroke-width="3"/>
+    <path d="M20 31a14 14 0 0 1 10-8" fill="none" stroke="#9aa3c0" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M6 44h-4M8 52H3M58 44h4M56 52h5" stroke="#2b2e42" stroke-width="2.5" stroke-linecap="round"/></svg></span><span title="quake"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <path d="M4 52h56" stroke="#2b2e42" stroke-width="3" stroke-linecap="round"/>
+    <path d="M30 52l-5 9M34 52l3 6 4 3M20 52l-8 6M44 52l9 5" fill="none" stroke="#2b2e42" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="28" y="4" width="8" height="30" rx="3" fill="#d9a066" stroke="#2b2e42" stroke-width="2.5"/>
+    <rect x="14" y="30" width="36" height="18" rx="3" fill="#8a5a3a" stroke="#2b2e42" stroke-width="3"/>
+    <rect x="11" y="28" width="7" height="22" rx="2" fill="#3a3f57" stroke="#2b2e42" stroke-width="2.5"/>
+    <rect x="46" y="28" width="7" height="22" rx="2" fill="#3a3f57" stroke="#2b2e42" stroke-width="2.5"/>
+    <path d="M4 44l4-4M60 44l-4-4" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/></svg></span><span title="tesla"><svg aria-hidden="true" viewBox="-4 -4 108 108"><g stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M38 25 L26 18 L31 12 L12 3" fill="none" stroke="#2b2e42" stroke-width="9"/>
+    <path d="M62 25 L74 18 L69 12 L88 3" fill="none" stroke="#2b2e42" stroke-width="9"/>
+    <path d="M38 25 L26 18 L31 12 L12 3" fill="none" stroke="#7ff6ff" stroke-width="4.5"/>
+    <path d="M62 25 L74 18 L69 12 L88 3" fill="none" stroke="#7ff6ff" stroke-width="4.5"/>
+    <path d="M24 94 L76 94 L68 76 L32 76Z" fill="#585d78"/>
+    <rect x="40" y="36" width="20" height="41" rx="3" fill="#c47a3a"/>
+    <path d="M40 44 h20 M40 52 h20 M40 60 h20 M40 68 h20" stroke="#ffd08a" stroke-width="3.5"/>
+    <circle cx="50" cy="28" r="15" fill="#d9e1f0"/>
+    <circle cx="45" cy="23" r="4.5" fill="#ffffff" stroke="none"/></g></svg></span><span title="vortex"><svg aria-hidden="true" viewBox="-4 -4 108 108"><g stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="8" y="14" width="14" height="14" rx="2" transform="rotate(20 15 21)" fill="#e8a85c" stroke-width="3.5"/>
+    <rect x="78" y="72" width="12" height="12" rx="2" transform="rotate(-25 84 78)" fill="#aeb8c8" stroke-width="3.5"/>
+    <ellipse cx="50" cy="52" rx="45" ry="14" transform="rotate(-18 50 52)" fill="none" stroke="#2b2e42" stroke-width="12"/>
+    <ellipse cx="50" cy="52" rx="45" ry="14" transform="rotate(-18 50 52)" fill="none" stroke="#ff9af2" stroke-width="6"/>
+    <circle cx="50" cy="52" r="25" fill="#2a1b4a"/>
+    <path d="M50 52 m-4 0 a4 4 0 1 1 8 0 a9 9 0 1 1 -18 0 a14 14 0 1 1 28 0" fill="none" stroke="#b77bff" stroke-width="4.5"/>
+    <path d="M7 64 A45 14 -18 0 0 93 40" fill="none" stroke="#2b2e42" stroke-width="12"/>
+    <path d="M7 64 A45 14 -18 0 0 93 40" fill="none" stroke="#ff9af2" stroke-width="6"/></g></svg></span><span title="airstrike"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <path d="M6 22l20 2 12-14h6l-6 15 16 1 4-6h4l-2 9 2 9h-4l-4-6-16 1 6 15h-6L26 35 6 37z" fill="#dfe6f2" stroke="#2b2e42" stroke-width="2.6" stroke-linejoin="round" transform="translate(0 -2)"/>
+    <g fill="#ff6b4a" stroke="#2b2e42" stroke-width="2"><ellipse cx="20" cy="50" rx="4" ry="5"/><ellipse cx="32" cy="54" rx="4" ry="5"/><ellipse cx="44" cy="50" rx="4" ry="5"/></g></svg></span><span title="nuke"><svg aria-hidden="true" viewBox="0 0 64 64">
+    <ellipse cx="32" cy="34" rx="18" ry="22" fill="#4a5030" stroke="#2b2e42" stroke-width="3"/>
+    <rect x="14" y="30" width="36" height="8" fill="#ffe14a" stroke="#2b2e42" stroke-width="2.5"/>
+    <circle cx="32" cy="34" r="9" fill="#ffe14a" stroke="#2b2e42" stroke-width="2"/>
+    <g fill="#2b2e42"><path d="M32 34l-4.5-7.8a9 9 0 0 1 9 0z"/><path d="M32 34l9 0a9 9 0 0 1-4.5 7.8z"/><path d="M32 34l-4.5 7.8a9 9 0 0 1-4.5-7.8z"/></g>
+    <circle cx="32" cy="34" r="2" fill="#ffe14a"/>
+    <path d="M24 12l8-6 8 6z" fill="#2b2e42"/></svg></span></div>
+  </div>
+
+  <h2 class="sticker">WHAT'S INSIDE</h2>
+  <div class="grid">
+    <div class="card"><h3>Real physics</h3><p>Every block is real: knock out the right support and watch the whole tower come crashing down.</p></div>
+    <div class="card"><h3>Castles & shields</h3><p>Storm fortresses with corner towers and a keep. Some hide under a shield dome: take out the reactors first.</p></div>
+    <div class="card"><h3>Daily challenge</h3><p>The same towers and the same weapons in the same order for everyone. Plan your shots and share your result.</p></div>
+    <div class="card"><h3>Endless</h3><p>Fly from island to island as far as you can. Every island is a checkpoint.</p></div>
+    <div class="card"><h3>Share the boom</h3><p>Your best collapse becomes a short video, made on your phone, ready to share.</p></div>
+    <div class="card"><h3>Five languages</h3><p>English, Español, Português, Deutsch and Français.</p></div>
+  </div>
+
+  <h2 class="sticker">THE VILLAIN</h2>
+  <div class="card baron">
+    <svg viewBox="0 0 200 200" aria-hidden="true"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="64" y="166" width="26" height="22" rx="6" fill="#2b2e42"/><rect x="110" y="166" width="26" height="22" rx="6" fill="#2b2e42"/><path d="M34 104 Q14 128 34 150" fill="none" stroke="#2b2e42" stroke-width="22" stroke-linecap="round"/><path d="M34 104 Q14 128 34 150" fill="none" stroke="#d63c3c" stroke-width="13" stroke-linecap="round"/><path d="M166 104 Q186 128 166 150" fill="none" stroke="#2b2e42" stroke-width="22" stroke-linecap="round"/><path d="M166 104 Q186 128 166 150" fill="none" stroke="#d63c3c" stroke-width="13" stroke-linecap="round"/><circle cx="36" cy="150" r="10" fill="#f2c49b" stroke="#2b2e42" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="164" cy="150" r="10" fill="#f2c49b" stroke="#2b2e42" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><rect x="36" y="86" width="128" height="88" rx="22" fill="#d63c3c" stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><rect x="38" y="142" width="124" height="13" fill="#2b2e42"/><rect x="91" y="140" width="18" height="17" rx="3" fill="#ffd23f" stroke="#2b2e42" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="80" cy="112" r="4" fill="#ffd23f" stroke="#2b2e42" stroke-width="2"/><circle cx="120" cy="112" r="4" fill="#ffd23f" stroke="#2b2e42" stroke-width="2"/><circle cx="80" cy="128" r="4" fill="#ffd23f" stroke="#2b2e42" stroke-width="2"/><circle cx="120" cy="128" r="4" fill="#ffd23f" stroke="#2b2e42" stroke-width="2"/><ellipse cx="44" cy="92" rx="17" ry="8" fill="#ffd23f" stroke="#2b2e42" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M30 99 v8 M37 100 v9 M44 100 v10 M51 100 v9 M58 99 v8" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/><ellipse cx="156" cy="92" rx="17" ry="8" fill="#ffd23f" stroke="#2b2e42" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M142 99 v8 M149 100 v9 M156 100 v10 M163 100 v9 M170 99 v8" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/><rect x="126" y="104" width="22" height="7" fill="#5ec8ff" stroke="#2b2e42" stroke-width="2"/><circle cx="131" cy="118" r="5" fill="#ffd23f" stroke="#2b2e42" stroke-width="2"/><circle cx="143" cy="118" r="5" fill="#c0c6d4" stroke="#2b2e42" stroke-width="2"/><ellipse cx="100" cy="74" rx="32" ry="30" fill="#f2c49b" stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="100" cy="82" rx="7" ry="6" fill="#e8a07a" stroke="#2b2e42" stroke-width="3"/><circle cx="88" cy="72" r="4.5" fill="#2b2e42"/><circle cx="112" cy="72" r="4.5" fill="#2b2e42"/><circle cx="89.5" cy="70.5" r="1.4" fill="#fff"/><circle cx="113.5" cy="70.5" r="1.4" fill="#fff"/><path d="M78 62 L95 67 M122 62 L105 67" stroke="#2b2e42" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M68.3 69.8 L68.0 74.0 L68.3 78.2 L69.2 82.3 L70.8 86.2 L72.9 89.9 L75.5 93.3 L78.6 96.3 L82.1 98.9 L86.0 112.0 L92.0 106.0 L100.0 117.0 L108.0 106.0 L114.0 112.0 L116.0 100.0 L119.7 97.6 L123.0 94.8 L125.9 91.6 L128.3 88.1 L130.1 84.3 L131.3 80.2 L131.9 76.1 L131.9 71.9 L125.0 72.0 L123.0 86.0 L110.0 95.0 L100.0 96.0 L90.0 95.0 L77.0 86.0 L75.0 72.0 Z" fill="#23202a" stroke="#2b2e42" stroke-width="4" stroke-linejoin="round"/><path d="M100 89 L88 87 L74 91 L80 84 L92 82 L100 85 L108 82 L120 84 L126 91 L112 87 Z" fill="#23202a" stroke="#2b2e42" stroke-width="3" stroke-linejoin="round"/><path d="M92 94 Q100 98 108 92" fill="none" stroke="#2b2e42" stroke-width="3" stroke-linecap="round"/><path d="M50 54 Q60 22 100 28 Q140 22 150 54 Q100 44 50 54 Z" fill="#2b2e42" stroke="#2b2e42" stroke-width="4" stroke-linejoin="round"/><path d="M54 52 Q100 40 146 52" fill="none" stroke="#ffd23f" stroke-width="3"/><circle cx="100" cy="40" r="9" fill="#d63c3c" stroke="#ffd23f" stroke-width="3"/><g transform="translate(100 40) scale(.7)"><path d="M4 -10 L-5 2 L1 2 L-4 12 L6 -1 L0 -1 Z" fill="#ffd23f" stroke="#2b2e42" stroke-width="2.5" stroke-linejoin="round"/></g></svg></svg>
+    <div><p class="quote">“A flying rowboat? How adorable.”</p><p>Baron Bolt has closed the sky route with a gun tower on every island. You have a flying galley and 20 ways to reopen it: seven island worlds from Meadow Isle to Candy Cove, ending at his last hideout.</p></div>
+  </div>
 </main>
+<footer class="bottom">© 2026 Felix Werner · <a href="privacy-policy.html">Privacy policy / Datenschutz</a> · <a href="impressum.html">Impressum</a> · <a href="mailto:splittingorbs@gmail.com">splittingorbs@gmail.com</a></footer>
+</div>
 </body>
 </html>
