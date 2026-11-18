@@ -11,4 +11,4 @@ Public pages for the game **Boom & Defend** (`com.boomdefend.game`, Android, iPh
 The pages are generated from the game's source (`python3 scripts/site-images.py` and
 `npm run legal` in the game repository, then copy `docs/` here); edit them there, not here.
 
-Live site: https://felixsecondary03.github.io/boom-and-defend-site/
+Live site: https://boomanddefend.com/ (custom domain via `CNAME`; DNS at Strato: A record `185.199.108.153`, `www` CNAME `felixsecondary03.github.io`; the old github.io address redirects there)
