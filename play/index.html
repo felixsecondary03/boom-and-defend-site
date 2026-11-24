@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#5fb6f2" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Boom &amp; Defend</title>
+    <meta property="og:title" content="Can you beat my score? – Boom & Defend">
+    <meta property="og:description" content="Same towers, same weapons. Play the challenge right in your browser, free.">
+    <meta property="og:image" content="https://boomanddefend.com/img/og.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='30' cy='36' r='22' fill='%232f3346'/%3E%3Cpath d='M44 18l8-8' stroke='%23ffd23f' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index-Ch4FLlbb.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/physics-BbGSuU-M.js">
+    <link rel="modulepreload" crossorigin href="./assets/three-CsBMkf_D.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-BUsTCnN6.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+      <div id="fx-layer"></div>
+      <div id="vignette"></div>
+      <div id="warn-layer"></div>
+      <div id="white-flash"></div>
+
+      <header id="hud" class="hidden">
+        <div class="hud-left">
+          <div class="health" aria-label="Hull">
+            <svg class="hud-icon" viewBox="0 0 32 24" aria-hidden="true">
+              <path d="M15 17V3" stroke="#2b2e42" stroke-width="2"/>
+              <path d="M9 4.5Q15 3 21 4.5L20 12Q15 13 10 12Z" fill="#fff3d6" stroke="#2b2e42" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M13 4v8.6M17 4v8.6" stroke="#e0533d" stroke-width="1.8"/>
+              <path d="M3 13.5H27C28.5 13.5 29.5 12.5 30 11L30.5 12C29.5 17 27 20.5 22 20.5H9C6 20.5 4 18 3 13.5Z" fill="#b0703a" stroke="#2b2e42" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M4.5 14C2.5 12 2 9.5 3.5 8.5" fill="none" stroke="#2b2e42" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="11" cy="15.5" r="1.5" fill="#e0533d"/><circle cx="15" cy="15.5" r="1.5" fill="#ffd23f"/><circle cx="19" cy="15.5" r="1.5" fill="#e0533d"/>
+            </svg>
+            <div class="bar"><div class="bar-fill" id="health-fill"></div><span id="health-text">100</span></div>
+          </div>
+        </div>
+        <div class="hud-mid">
+          <div class="chip" id="island-chip"><span id="island-pre"></span>ISLAND <b id="island">1</b></div>
+          <div class="tower-bar" id="tower-bar" aria-label="Tower destroyed"><div class="tower-fill" id="tower-fill"></div><span class="tower-label">TOWER</span><b id="tower-pct">0%</b></div>
+          <div class="coin-chip" id="coin-chip"><svg class="coin-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#ffd23f" stroke="#7a5a00" stroke-width="2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#e8a800" stroke-width="1.6"/><path d="M10.6 8.5h2.6v7" stroke="#7a5a00" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span id="coins">0</span></div>
+        </div>
+        <div class="hud-right">
+          <div class="scores">
+            <div class="score" id="score">0</div>
+            <div class="best">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v3h3v2a5 5 0 0 1-5 5h-.3A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 8.3 13H8a5 5 0 0 1-5-5V6h3V3zm0 5H5a3 3 0 0 0 1 2.2V8zm12 0v2.2A3 3 0 0 0 19 8h-1z" fill="#ffd23f" stroke="#7a5a00" stroke-width="1"/></svg>
+              <span id="best">0</span><span class="gold-star hidden" id="hud-gold">★</span>
+            </div>
+          </div>
+          <button class="cta-chip" data-action="cta">GET IT FREE</button>
+          <button class="icon-btn" id="btn-pause" aria-label="Pause">
+            <svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5" /><rect x="14" y="5" width="4" height="14" rx="1.5" /></svg>
+          </button>
+        </div>
+      </header>
+
+      <nav id="tray" class="hidden" aria-label="Weapons"></nav>
+
+      <div id="tray-name" class="hidden" aria-live="polite"></div>
+      <div id="tray-next" class="hidden" aria-hidden="true"></div>
+      <div id="gun-status" class="hidden" role="status"></div>
+      <div id="drag-ghost" class="hidden" aria-hidden="true"></div>
+
+      <div id="aim-tag" class="off"></div>
+      <div id="hint" class="hidden" aria-live="polite">
+        <div class="hint-hand"><svg viewBox="0 0 48 48"><path d="M18 22V9a3 3 0 0 1 6 0v11l1-1a3 3 0 0 1 5 1v1a3 3 0 0 1 5 1v1a3 3 0 0 1 5 2v9c0 7-5 12-12 12h-2c-5 0-8-2-11-6l-6-9a3 3 0 0 1 5-4z" fill="#fff7e8" stroke="#2b2e42" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+        <div class="hint-text"></div>
+      </div>
+
+      <div id="banner"><div class="banner-title"></div><div class="banner-sub"></div><div class="banner-quote hidden"><span class="bq-face"></span><span class="bq-text"></span></div></div>
+      <div id="toast" class="hidden"><span class="toast-ico">🏆</span><div><b class="toast-title"></b><span class="toast-sub"></span></div></div>
+      <div id="milestone" class="hidden"></div>
+      <div id="coin-fly"></div>
+
+      <section id="screen-start" class="screen">
+        <div class="panel title-panel booting">
+          <div class="panel-top">
+            <button class="icon-btn" data-action="settings" aria-label="Settings">
+              <svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M20.00 12.00 L22.54 13.08 L22.03 15.43 L19.27 15.35 L17.66 17.66 L18.69 20.22 L16.66 21.52 L14.77 19.51 L12.00 20.00 L10.92 22.54 L8.57 22.03 L8.65 19.27 L6.34 17.66 L3.78 18.69 L2.48 16.66 L4.49 14.77 L4.00 12.00 L1.46 10.92 L1.97 8.57 L4.73 8.65 L6.34 6.34 L5.31 3.78 L7.34 2.48 L9.23 4.49 L12.00 4.00 L13.08 1.46 L15.43 1.97 L15.35 4.73 L17.66 6.34 L20.22 5.31 L21.52 7.34 L19.51 9.23Z M15.4 12a3.4 3.4 0 1 0-6.8 0 3.4 3.4 0 1 0 6.8 0Z" fill="#2b2e42" stroke="#2b2e42" stroke-width="0.9" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="coin-chip big" id="menu-coins"><svg class="coin-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#ffd23f" stroke="#7a5a00" stroke-width="2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#e8a800" stroke-width="1.6"/><path d="M10.6 8.5h2.6v7" stroke="#7a5a00" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>0</span></div>
+          </div>
+          <h1 class="logo" data-no-i18n><span class="l1">BOOM</span><span class="amp">&amp;</span><span class="l2">DEFEND</span></h1>
+          <p class="tagline">Topple the towers. Stay in the air.</p>
+          <button class="big-btn first-only play-first" data-action="campaign">PLAY</button>
+          <div class="sub-line first-only">Clear your first island to unlock a new weapon!</div>
+          <button class="big-btn full-only" data-action="campaign">CAMPAIGN</button>
+          <div class="sub-line full-only" id="campaign-line"></div>
+          <button class="big-btn run-btn full-only" id="btn-run" data-action="run">ENDLESS</button>
+          <div class="sub-line full-only" id="run-line"></div>
+          <button class="link-btn hidden full-only" id="btn-newrun" data-action="newrun">Start a new run from island 1</button>
+          <button class="winter-btn hidden full-only" id="btn-winter" data-action="winter"><span class="wb-ico" aria-hidden="true">❄</span><span class="wb-text"><b>WINTER CALENDAR</b><span id="winter-line"></span></span></button>
+          <div class="menu-row full-only">
+            <button class="tile-btn" data-action="daily"><span class="tile-ico">📅</span><span>DAILY</span><i class="tile-badge hidden" id="daily-badge">✓</i></button>
+            <button class="tile-btn" data-action="weekly"><span class="tile-ico">🗼</span><span>WEEKLY</span><i class="tile-badge hidden" id="weekly-badge">✓</i></button>
+            <button class="tile-btn" data-action="arsenal"><span class="tile-ico">🛒</span><span>ARSENAL</span></button>
+            <button class="tile-btn" data-action="trophies"><span class="tile-ico">🏆</span><span id="trophy-count">TROPHIES</span></button>
+          </div>
+          <div class="best-line full-only">BEST <b id="start-best">0</b><span class="gold-star hidden" id="start-gold" title="Cleared island 100 in endless">★</span></div>
+        </div>
+      </section>
+
+      <section id="screen-arsenal" class="screen hidden">
+        <div class="camp">
+          <div class="camp-head">
+            <button class="icon-btn" data-action="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <h3>ARSENAL</h3>
+            <div class="coin-chip big" id="shop-coins"><svg class="coin-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#ffd23f" stroke="#7a5a00" stroke-width="2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#e8a800" stroke-width="1.6"/><path d="M10.6 8.5h2.6v7" stroke="#7a5a00" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>0</span></div>
+          </div>
+          <div class="shop-grid" id="shop-grid"></div>
+          <div class="shop-detail" id="shop-detail"></div>
+        </div>
+      </section>
+
+      <section id="screen-trophies" class="screen hidden">
+        <div class="camp">
+          <div class="camp-head">
+            <button class="icon-btn" data-action="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <h3>TROPHIES</h3>
+          </div>
+          <button class="mid-btn gc-btn hidden" data-action="leaderboards" id="btn-leaderboards">🏆 LEADERBOARDS</button>
+          <div class="trophy-list" id="trophy-list"></div>
+        </div>
+      </section>
+
+      <section id="screen-settings" class="screen hidden">
+        <div class="panel">
+          <h2>SETTINGS</h2>
+          <button class="mid-btn ghost" data-setting="sound">SOUND: ON</button>
+          <button class="mid-btn ghost" data-setting="music">MUSIC: ON</button>
+          <button class="mid-btn ghost" data-setting="haptics">VIBRATION: ON</button>
+          <button class="mid-btn ghost" data-setting="graphics">GRAPHICS: HIGH</button>
+          <button class="mid-btn ghost" data-setting="effects">EFFECTS: FULL</button>
+          <button class="mid-btn ghost" data-setting="shadows">SHADOWS: SIMPLE</button>
+          <button class="mid-btn ghost" data-setting="antialias">SMOOTH EDGES: ON</button>
+          <button class="mid-btn ghost hidden" data-setting="reminder" id="set-reminder">DAILY REMINDER: OFF</button>
+          <button class="mid-btn ghost" data-setting="lang">LANGUAGE: AUTO</button>
+          <button class="big-btn" data-action="back">BACK</button>
+          <div class="settings-links">
+            <button class="link-btn" data-action="intro">Watch intro</button>
+            <button class="link-btn" data-action="privacy">Privacy &amp; imprint</button>
+            <button class="link-btn" data-action="reset" id="btn-reset">Reset progress</button>
+          </div>
+          <div class="settings-credits" id="settings-credits"></div>
+        </div>
+      </section>
+
+      <section id="screen-privacy" class="screen hidden">
+        <div class="panel privacy-panel">
+          <h2>PRIVACY</h2><p class="privacy-sub" data-no-i18n>Privacy policy · Datenschutz · Impressum</p>
+          <div class="privacy-text" id="privacy-text" data-no-i18n></div>
+          <button class="big-btn" data-action="settings">BACK</button>
+        </div>
+      </section>
+
+      <section id="screen-campaign" class="screen hidden">
+        <div class="camp">
+          <div class="camp-head">
+            <button class="icon-btn" data-action="back" aria-label="Back">
+              <svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <h3>CAMPAIGN</h3>
+            <div class="camp-stars"><span>★</span> <b id="camp-stars">0</b><small id="camp-max">/84</small></div>
+          </div>
+          <div class="book-tabs hidden" id="book-tabs"></div>
+          <div class="arsenal" id="arsenal"></div>
+          <div class="arsenal-info" id="arsenal-info"></div>
+          <div class="chapters" id="chapters"></div>
+        </div>
+      </section>
+
+      <section id="screen-pause" class="screen hidden">
+        <div class="panel">
+          <h2>PAUSED</h2>
+          <button class="big-btn" id="btn-resume">RESUME</button>
+          <button class="mid-btn" id="btn-restart-pause">RESTART</button>
+          <button class="mid-btn" id="btn-quit">QUIT</button>
+          <div class="toggle-row">
+            <button class="mid-btn ghost" data-setting="sound">SOUND: ON</button>
+            <button class="mid-btn ghost" data-setting="music">MUSIC: ON</button>
+          </div>
+          <div class="toggle-row">
+            <button class="mid-btn ghost" data-setting="haptics">VIBRATION: ON</button>
+            <button class="mid-btn ghost" data-setting="graphics">GRAPHICS: HIGH</button>
+          </div>
+          <div class="toggle-row">
+            <button class="mid-btn ghost" data-setting="effects">EFFECTS: FULL</button>
+          <button class="mid-btn ghost hidden" data-setting="reminder" id="set-reminder">DAILY REMINDER: OFF</button>
+          <button class="mid-btn ghost" data-setting="lang">LANGUAGE: AUTO</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-over" class="screen hidden">
+        <div class="panel">
+          <h2 class="over-title">SHOT DOWN!</h2>
+          <div class="over-quote hidden" id="over-quote"><span class="oq-face"></span><span class="oq-text"></span></div>
+          <div class="gold-big hidden" id="gold-big">★</div>
+          <div class="run-stars hidden" id="run-stars"><span>★</span><span>★</span><span>★</span></div>
+          <ul class="star-list hidden" id="star-list"></ul>
+          <div class="rewards" id="rewards"></div>
+          <div class="over-stats" id="over-stats"></div>
+          <div class="new-best hidden" id="new-best">NEW BEST!</div>
+          <div class="over-btns" id="over-btns"></div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
